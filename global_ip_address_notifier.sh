@@ -1,11 +1,12 @@
 #!/bin/bash
  
 ip_address=$(curl -s ifconfig.io)
-if ! [ -e /tmp/global_ip_address_notifier ]; then
-  touch /tmp/global_ip_address_notifier
+tmp_file="/tmp/global_ip_address_notifier"
+if ! [ -e ${tmp_file} ]; then
+  touch ${tmp_file}
 fi
-past_ip_address=$(cat /tmp/global_ip_address_notifier)
+past_ip_address=$(cat ${tmp_file})
  
 if [ "${ip_address}" != "${past_ip_address}" ]; then
-  echo ${ip_address} | tee /tmp/global_ip_address_notifier
+  echo ${ip_address} | tee ${tmp_file}
 fi
